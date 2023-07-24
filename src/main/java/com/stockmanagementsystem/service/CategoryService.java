@@ -9,6 +9,6 @@ import java.util.Map;
 public interface CategoryService {
     String add(String categoryName);
     String delete(String categoryName);
-    String rename(String categoryName,String newCategoryName);
-    String showAllCategories();
+    String update(String categoryName,String newCategoryName);
+    List<Category> showAllCategories();
 }

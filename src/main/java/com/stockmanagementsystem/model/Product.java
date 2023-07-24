@@ -31,12 +31,9 @@ public class Product {
     private Integer stock;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId",referencedColumnName = "categoryId")
+    @JoinColumn(name = "categoryId",referencedColumnName = "categoryId",nullable = false)
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "customerId",referencedColumnName = "customerId")
-    private Customer customer;
 
     @Override
     public String toString() {
@@ -46,7 +43,6 @@ public class Product {
                 "\nmodel= " + model +
                 "\nprice= " + price +
                 "\nstock= " + stock +
-                "\ncategory = " + category +
-                "\ncustomer =" + customer;
+                "\ncategory = " + category;
     }
 }

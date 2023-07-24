@@ -26,13 +26,14 @@ public class CategoryController {
         return categoryService.delete(categoryName.get("categoryName"));
     }
 
-    @PostMapping("/rename")
-    public String renameCategory(@RequestBody RenameRequest request) {
-        return categoryService.rename(request.getCategoryName().get("categoryName"), request.getNewCategoryName().get("newCategoryName"));
+    @PostMapping("/update")
+    public String updateCategory(@RequestBody RenameRequest request) {
+        return categoryService.update(request.getCategoryName().get("categoryName"), request.getNewCategoryName().get("newCategoryName"));
     }
 
-    @GetMapping("/allcategories")
-    public String showAllCategories(){
+    @GetMapping("/showAll")
+    @ResponseBody
+    public List<Category> showAllCategories(){
         return categoryService.showAllCategories();
     }
 }

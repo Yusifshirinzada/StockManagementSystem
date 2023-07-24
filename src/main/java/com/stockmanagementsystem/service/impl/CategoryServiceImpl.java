@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,86 +20,96 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public String add(String categoryName) {
+        if(loggedIn==null||loggedIn.user==null){
+            return "Not entered";
+        }
+
+        int userRoleId = loggedIn.user.getRole().getId();
+
+        if (!(userRoleId == 1)) {
+            return "You do not have the authority to delete a category!";
+        }
         if (categoryName.isEmpty()) {
             return "Write a category name.";
         }
-        try {
-            int userRoleId = loggedIn.user.getRole().getId();
-            if (userRoleId == 1) {
-                if (categoryRepository.findByName(categoryName) == null) {
-                    Category category = Category.builder()
+
+        Optional<Category> checkCategory=categoryRepository.findByName(categoryName);
+
+        if(!checkCategory.isEmpty()) {
+            return categoryName + " Category already exists";
+        }
+
+        Category category = Category.builder()
                             .name(categoryName)
                             .build();
-                    categoryRepository.save(category);
-                    return categoryName + " Category added.";
-                } else {
-                    return categoryName + " Category already exists";
-                }
-            } else {
-                return "You do not have the authority to add a category";
-            }
-        } catch (NullPointerException e) {
-            return "Not entered!";
-        }
+        categoryRepository.save(category);
+        return categoryName + " Category added.";
     }
 
     @Override
     public String delete(String categoryName) {
+
+        if(loggedIn==null||loggedIn.user==null){
+            return "Not entered";
+        }
+
+        int userRoleId = loggedIn.user.getRole().getId();
+
+        if (!(userRoleId == 1)) {
+            return "You do not have the authority to delete a category!";
+        }
+
         if (categoryName.isEmpty()) {
             return "Write a category name.";
         }
-        try {
-            int userRoleId = loggedIn.user.getRole().getId();
-            if (userRoleId == 1) {
-                try {
-                    Category category = categoryRepository.findByName(categoryName);
-                    categoryRepository.deleteById(category.getCategoryId());
-                    return categoryName + " has been delete.";
-                } catch (NullPointerException e) {
-                    return "Category not found.";
-                }
-            } else {
-                return "You do not have the authority to delete a category!";
-            }
-        } catch (NullPointerException e) {
-            return "Not entered.";
+
+        Optional<Category> category=categoryRepository.findByName(categoryName);
+
+        if(category.isEmpty()){
+            return "Category not found.";
         }
+
+        categoryRepository.deleteById(category.get().getCategoryId());
+        return categoryName + " has been delete.";
     }
 
     @Override
-    public String rename(String categoryName,String newCategoryName) {
+    public String update(String categoryName,String newCategoryName) {
+
+        if(loggedIn==null||loggedIn.user==null){
+            return "Not entered";
+        }
+
+        int userRoleId = loggedIn.user.getRole().getId();
+
+         if (!(userRoleId == 1)) {
+             return "You do not have the authority to delete a category!";
+         }
+
         if (categoryName.isEmpty()||newCategoryName.isEmpty()) {
             return "Write a category name.";
         }
 
-        try {
-            int userRoleId = loggedIn.user.getRole().getId();
-            if (userRoleId == 1) {
-                try {
-                    Category category = categoryRepository.findByName(categoryName);
-                    category.setName(newCategoryName);
-                    categoryRepository.save(category);
-                    return categoryName + " has been renamed to "+newCategoryName;
-                } catch (NullPointerException e) {
-                    return "Category not found.";
-                }
-            } else {
-                return "You do not have the authority to delete a category!";
-            }
-        } catch (NullPointerException e) {
-            return "Not entered.";
-        }
+         Optional<Category> category = categoryRepository.findByName(categoryName);
+         if(category.isEmpty()){
+             return "Category not found.";
+         }
+
+         category.get().setName(newCategoryName);
+         categoryRepository.save(category.get());
+         return categoryName + " has been renamed to "+newCategoryName;
 
     }
 
     @Override
-    public String showAllCategories() {
-        List<Category> categories=categoryRepository.findAll();
-        StringBuilder showCategories=new StringBuilder();
-        for (int i=0;i<categories.size();i++){
-            showCategories.append(categories.get(i).getName()).append("\n");
+    public List<Category> showAllCategories() {
+        if(loggedIn==null||loggedIn.user==null){
+            System.out.println("Not entered");
+            return new ArrayList<>();
         }
-        return showCategories.toString().trim();
+        List<Category> categories=categoryRepository.findAll();
+
+        return categories;
     }
 
 

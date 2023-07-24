@@ -30,4 +30,5 @@ public class LoggedIn {
         user = null;
         return "Successfully logged out.";
     }
+
 }
