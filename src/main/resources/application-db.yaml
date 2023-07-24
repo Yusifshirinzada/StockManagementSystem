@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3305/products?createDatabaseIfNotExist=true
+    username: products
+    password: password
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false

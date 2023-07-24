@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  products_db:
+    image: mysql:latest
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'products'
+      MYSQL_USER: 'products'
+      MYSQL_PASSWORD: 'password'
+    volumes:
+      - products_database:/var/lib/productsDb
+    ports:
+      - "3305:3306"
+    networks:
+      - products_network
+
+volumes:
+  products_database:
+
+networks:
+  products_network:
