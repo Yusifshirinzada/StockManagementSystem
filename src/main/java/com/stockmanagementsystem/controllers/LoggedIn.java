@@ -3,6 +3,7 @@ package com.stockmanagementsystem.controllers;
 import com.stockmanagementsystem.controllers.requests.LoginRequest;
 import com.stockmanagementsystem.model.User;
 import com.stockmanagementsystem.repository.UserRepository;
+import com.stockmanagementsystem.service.LoginService;
 import com.stockmanagementsystem.service.impl.LoginServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoggedIn {
     private final UserRepository userRepository;
-    private final LoginServiceImpl loginService;
+    private final LoginService loginService;
 
     public User user;
 

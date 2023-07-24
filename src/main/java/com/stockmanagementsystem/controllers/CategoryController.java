@@ -13,8 +13,8 @@ import java.util.Map;
 @RequestMapping("/category")
 @RequiredArgsConstructor
 public class CategoryController {
+
     private final CategoryService categoryService;
-    private final LoggedIn loggedIn;
 
     @PostMapping("/add")
     public String addCategory(@RequestBody Map<String, String> categoryName) {
@@ -33,7 +33,7 @@ public class CategoryController {
 
     @GetMapping("/showAll")
     @ResponseBody
-    public List<Category> showAllCategories(){
+    public List<Category> showAllCategories() {
         return categoryService.showAllCategories();
     }
 }

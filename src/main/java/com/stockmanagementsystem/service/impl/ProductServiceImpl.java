@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.save(product);
 
-        return product.getName()+" added to database.";
+        return product.getName()+" added to Products list.";
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.delete(product);
 
-        return product.getName()+" was deleted.";
+        return product.getName()+" has been deleted";
 
     }
 
@@ -93,31 +93,17 @@ public class ProductServiceImpl implements ProductService {
         }
 
         productRepository.save(findProduct.get());
-        return "Product " + findProduct.get().getName() + " updated.";
+        return "Product " + findProduct.get().getName() + " updated";
     }
 
     @Override
     public List<Product> showAll() {
         if (loggedIn == null || loggedIn.user == null) {
-            System.out.println("Not entered");
             return new ArrayList<>();
         }
 
         List<Product> products=productRepository.findAll();
         return products;
-//        for(Product product:products){
-//            System.out.println("Product id: "+product.getProductId());
-//            System.out.println("Product name: "+product.getName());
-//            System.out.println("Product model: "+product.getModel());
-//            System.out.println("Product price: "+product.getPrice());
-//            System.out.println("Product stock: "+product.getStock());
-//            System.out.println("Product category: "+product.getCategory().getName());
-//
-//            if(products.indexOf(product)!=products.size()-1){
-//                System.out.println("-------------");
-//            }
-//
-//        }
     }
 
 

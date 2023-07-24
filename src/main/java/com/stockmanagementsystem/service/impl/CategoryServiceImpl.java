@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
         int userRoleId = loggedIn.user.getRole().getId();
 
         if (!(userRoleId == 1)) {
-            return "You do not have the authority to delete a category!";
+            return "You do not have the authority to add a category!";
         }
         if (categoryName.isEmpty()) {
             return "Write a category name.";
@@ -69,7 +69,7 @@ public class CategoryServiceImpl implements CategoryService {
             return "Category not found.";
         }
 
-        categoryRepository.deleteById(category.get().getCategoryId());
+        categoryRepository.delete(category.get());
         return categoryName + " has been delete.";
     }
 

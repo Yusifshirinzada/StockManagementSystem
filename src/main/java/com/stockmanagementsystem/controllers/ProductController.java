@@ -2,6 +2,7 @@ package com.stockmanagementsystem.controllers;
 
 import com.stockmanagementsystem.controllers.requests.ProductRequest;
 import com.stockmanagementsystem.model.Product;
+import com.stockmanagementsystem.service.ProductService;
 import com.stockmanagementsystem.service.impl.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
 
     @PostMapping("/add")
     public String add(@RequestBody Product product){
